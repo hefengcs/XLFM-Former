@@ -1,0 +1,59 @@
+paths:
+  train_list: "/home/LifeSci/wenlab/hefengcs/VCD_torch_gnode05/data/data_div/total_moving2fixed/train_mid_1_NemoS.txt"
+  val_list: "/home/LifeSci/wenlab/hefengcs/VCD_torch_gnode05/data/data_div/total_moving2fixed/val_mid_1_NemoS.txt"
+  SimMIM_path: "/home/LifeSci/wenlab/hefengcs/VCD_torch_gnode05/ckpt/tiny_mask_tiny_ratio70_2.16/epoch=109-step=67650.ckpt"
+  #Resume_path: "/home/LifeSci/wenlab/hefengcs/VCD_torch_gnode05/ckpt/swin_tiny_fixed_case3_mask_pretrained_ratio70_2.17/epoch=14-step=5955.ckpt"
+training:
+  batch_size: 1
+  learning_rate: 1e-4
+  max_epochs: 250
+  devices: [1,3,5,7]
+  accelerator: "gpu"
+  strategy: "ddp_spawn"
+  #strategy: "ddp"
+  log_every_n_steps: 50
+
+callbacks:
+  save_top_k: -1
+  monitor: "val_loss"
+  mode: "min"
+  epoch_interval: 10
+
+data_transforms:
+  train_transform:
+    - RandomHorizontalFlip: {p: 0.5}
+    - RandomVerticalFlip: {p: 0.5}
+    - RandomRotation: {p: 0.5}
+    - RandomGaussianNoise: {p: 0.5}
+    - RandomGaussianBlur: {p: 0.5}
+    - RandomBrightness: {p: 0.5}
+    - RandomContrast: {p: 0.5}
+    - ToTensor: {}
+  val_transform:
+    - ToTensor: {}
+
+experiment:
+  model: "Swin_Transformer_tiny"
+  label: "swin_tiny_fixed_case3_baseline_pretrained_mid_dataset_PSF_plus_10_7.30_1"
+  loss_config:
+    psnr_loss:
+      weight: 1.0      # 对应公式中的 psnr_loss/43
+    ssim_loss:
+      weight: 1.0526   # 计算为 1/0.95 的近似值
+    edges_loss:
+      weight: 10000.0  # 对应公式中的 edges_loss/1e-4
+    multi_scale_mse:
+      weight: 100000.0 # 对应公式中的 multi_scale_mse/1e-5
+#    mip_loss:
+#      weight: 1000.0   # 对应公式中的 MIP_loss_value/1e-3
+    mse_loss:
+      weight: 0.1      # 你手动定义的权重
+    PSF_flag: True
+    PSF_ratio: 5e-3
+    PSF_robust_path: "/gpfs/home/LifeSci/wenlab/hefengcs/VCD_torch_gnode05/RLD_test/PSF/robust/psf_plus10.npy"
+
+#    high_value_loss:
+#      weight: 10000.0  # 对应公式中的 high_value_loss/1e-4
+#    snr_loss:
+#      weight: 0.0204   # 对应公式中的 1/49 的值
+
