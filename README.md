@@ -53,3 +53,8 @@ The results will be saved to the output directory as specified in the configurat
 
 See `requirements.txt` for full list.
 
+**Dataset Download:**  
+🔗 [Baidu Cloud (Access Code: 2025)](https://pan.baidu.com/s/1db9oxYpCyp4xYTVT__z6rA?pwd=2025)  
+🧩 [HuggingFace (coming soon)](https://huggingface.co/datasets/hefengcs/XLFM-Zebrafish/tree/main)
+
+
