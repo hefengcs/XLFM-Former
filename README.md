@@ -1,4 +1,4 @@
-# XLFM-Former: Physics-Consistent 3D Reconstruction for Light Field Microscopy
+# From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy
 
 This repository provides a minimal and reproducible implementation of **XLFM-Former**, a transformer-based framework for 3D reconstruction from light field microscopy (XLFM) data. It is designed to address reproducibility and clarity concerns raised in the NeurIPS 2025 reviews.
 
@@ -53,8 +53,3 @@ The results will be saved to the output directory as specified in the configurat
 
 See `requirements.txt` for full list.
 
-
-
-## 🔒 Notes on Anonymity
-
-This repository is anonymized for review and does not contain dataset download links or institution-specific metadata. Full dataset and codebase will be released upon publication.
